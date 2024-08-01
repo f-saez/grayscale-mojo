@@ -1,20 +1,20 @@
-# grayscale-mojo
 
-Various ways to create a grayscale image, without using a LUT/HaldClut
+from pathlib import Path
+from grayscale import Grayscale, Filter
+from ppm import Image
+from time import now
+from testing import assert_equal
 
-Some code to generate grayscale images from sRGB source
+def main():
 
-## How to use it
-```
     img = Image.from_ppm(Path("validation/woman.ppm")) 
 
     grayscale = Grayscale()
 
-    x = grayscale.rec709(img) # a REC709 luminance
+    x = grayscale.rec709(img)
     _ = x.to_ppm(Path("1-rec709"))
 
-    # filter is used to simulate the filter you can put in front of your camera lens
-    x = grayscale.panchromatic(img, Filter.yellow()) 
+    x = grayscale.panchromatic(img, Filter.yellow())
     _ = x.to_ppm(Path("2-panchromatic"))
 
     x = grayscale.hyper_panchromatic(img, Filter.blue())
@@ -28,4 +28,3 @@ Some code to generate grayscale images from sRGB source
 
     x = grayscale.luminance(img, Filter.red_yellow())
     _ = x.to_ppm(Path("6-luminance"))         
-```
